@@ -28,3 +28,10 @@ nav.navbar {
     box-shadow: 0 0 15px #00000055;
     /* height: 100px; */
 }
+
+.journal-entry {
+    min-height: 200px;
+    resize: vertical;
+    overflow-y: hidden;
+    width: 100%;
+}
