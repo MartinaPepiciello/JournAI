@@ -1,0 +1,30 @@
+body {
+    background-color: #7e8e65;
+    font-family: 'Playfair Display', Times, serif;
+}
+
+nav.navbar {
+    background-color: #f0f2f4;
+    box-shadow: 0 0 15px #00000055;
+}
+
+.navbar-light .navbar-brand {
+    font-family: 'Playfair Display', Times, serif;
+    font-size: 30px;
+    font-weight: 800;
+    color: #556043;
+}
+
+.navbar-light .navbar-brand span {
+    color: #a7342b;
+}
+
+.journal {
+    background-color: #fff;
+    max-width: 1200px;
+    margin: 30px;
+    border-radius: 30px;
+    padding: 20px;
+    box-shadow: 0 0 15px #00000055;
+    /* height: 100px; */
+}
