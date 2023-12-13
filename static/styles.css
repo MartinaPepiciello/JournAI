@@ -22,7 +22,7 @@ nav.navbar {
 .journal {
     background-color: #fff;
     max-width: 1200px;
-    margin: 30px;
+    margin: 30px auto;
     border-radius: 30px;
     padding: 20px;
     box-shadow: 0 0 15px #00000055;
@@ -30,8 +30,30 @@ nav.navbar {
 }
 
 .journal-entry {
-    min-height: 200px;
+    min-height: 100px;
     resize: vertical;
     overflow-y: hidden;
     width: 100%;
+}
+
+.journal-entry:disabled {
+    background-color: #fff;
+    color: #000;
+}
+
+button.reflect-btn {
+    border: none;
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    background-color: #e09b80;
+}
+
+.prompt {
+    font-weight: 600;
+    font-style: italic;
+    font-size: 18px;
+    margin: 10px 0 0 0;
 }
