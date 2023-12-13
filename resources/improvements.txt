@@ -1,0 +1,5 @@
+disable submit & reflect more for empty entry
+
+the colors!
+
+smoother transitions for adding/removing elements, prompt loading

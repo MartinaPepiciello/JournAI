@@ -53,13 +53,24 @@ function submitReflect() {
 
     let prompt = document.createElement('div');
     prompt.classList.add('prompt');
-    prompt.innerHTML = 'This is a test';
-    prompts.push(prompt);
-
+    prompt.innerHTML = 'Loading your prompt...';
     journal.appendChild(prompt);
 
-    addJournalEntry('Continue journaling...')
+    fetch('/get-prompt', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({lastEntry: journalEntries[journalEntries.length - 1].value, entryNumber: journalEntries.length})
+    })
+    .then(response => response.json())
+    .then(data => {
+        prompt.innerHTML = data.prompt;
+        prompts.push(prompt);
+        addJournalEntry('Continue journaling...')
+    })
+    .catch(error => console.error('Error:', error));
+
 }
+
 
 
 addJournalEntry('Start journaling...');
