@@ -2,11 +2,11 @@
 const journal = document.querySelector('.journal')
 
 // Lists to store user entries, buttons and generated prompts
-let entryWrappers = []; //maybe don't need this
+let entryWrappers = []; 
 let journalEntries = [];
 let editBtns = [];
 let saveBtns = [];
-let prompts = [];
+let prompts = [''];
 
 // Backup of journal entry currently being edited
 let entryBackup = '';
@@ -56,7 +56,9 @@ function addJournalEntry(placeholder) {
     saveBtnsRow.className = 'btn-row hidden';
     let saveBtnsGroup = [document.createElement('button'), document.createElement('button'), document.createElement('button')];
     saveBtnsGroup[0].textContent = 'Save & Preserve below';
-    saveBtnsGroup[1].textContent = 'Save & Discard below';
+    saveBtnsGroup[0].addEventListener('click', editSavePreserve);
+    saveBtnsGroup[1].textContent = 'Save & Remove below';
+    saveBtnsGroup[1].addEventListener('click', editSaveRemove);
     saveBtnsGroup[2].textContent = 'Cancel';
     saveBtnsGroup[2].addEventListener('click', editCancel);
     saveBtnsGroup.forEach(function(btn) {
@@ -79,7 +81,7 @@ function autoGrow(textarea) {
 
 // Actions when Submit & Reflect is clicked
 submitReflectBtn.addEventListener('click', submitReflect);
-function submitReflect() {
+function submitReflect(edit=false) {
     // Exit if an edit is in progress
     if (entryBackup !== '') {
         return;
@@ -106,7 +108,7 @@ function submitReflect() {
     fetch('/get-prompt', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({lastEntry: journalEntries[currentIndex].value, entryNumber: journalEntries.length})
+        body: JSON.stringify({lastEntry: journalEntries[currentIndex].value, entryNumber: (edit? -1 : journalEntries.length)})
     })
     .then(response => response.json())
     .then(data => {
@@ -153,6 +155,75 @@ function editEntry() {
     // Disable submit buttons
     submitReflectBtn.disabled = true;
     submitFinishBtn.disabled = true;
+}
+
+// Actions when Save & Preserve below is clicked
+function editSavePreserve() {
+    const lastIndex = journalEntries.length - 1;
+    const currentBtnRow = this.parentNode;
+    const currentIndex = saveBtns.indexOf(currentBtnRow);
+
+    // Clear entry backup
+    entryBackup = '';
+
+    // Disable current text area
+    journalEntries[currentIndex].disabled = true;
+
+    // Show current edit button
+    editBtns[currentIndex].classList.remove('hidden');
+
+    // Enable all edit buttons
+    editBtns.forEach(function(row) {
+        btn = row.children[0];
+        btn.disabled = false;
+    })
+
+    // Hide save buttons
+    currentBtnRow.classList.add('hidden');
+
+    // Enable last text area
+    journalEntries[lastIndex].disabled = false;
+
+    // Enable submit buttons
+    submitReflectBtn.disabled = false;
+    submitFinishBtn.disabled = false;
+}
+
+// Actions when Save & Remove below is clicked
+function editSaveRemove() {
+    const lastIndex = journalEntries.length - 1;
+    const currentBtnRow = this.parentNode;
+    const currentIndex = saveBtns.indexOf(currentBtnRow);
+
+    // Clear entry backup
+    entryBackup = '';
+
+    // Remove all entries below the current one
+    for (let i = currentIndex + 1; i < entryWrappers.length; i++) {
+        journal.removeChild(entryWrappers[i]);
+        journal.removeChild(prompts[i]);
+    }
+    entryWrappers = entryWrappers.slice(0, currentIndex + 1); 
+    journalEntries = journalEntries.slice(0, currentIndex + 1);
+    editBtns = editBtns.slice(0, currentIndex + 1);
+    saveBtns = saveBtns.slice(0, currentIndex + 1);
+    prompts = prompts.slice(0, currentIndex + 1);
+
+    // Enable all edit buttons
+    editBtns.forEach(function(row) {
+        btn = row.children[0];
+        btn.disabled = false;
+    })
+
+    // Hide save buttons
+    currentBtnRow.classList.add('hidden');
+
+    // Enable submit buttons
+    submitReflectBtn.disabled = false;
+    submitFinishBtn.disabled = false;
+
+    // Trigger the same actions as when a new entry is submitted
+    submitReflect(true);
 }
 
 // Actions when Cancel is clicked

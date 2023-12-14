@@ -27,7 +27,11 @@ Please keep the tone simple and friendly, and keep your response to no more than
 # For any subsequent entry
 prompt_later = '''I just added a new journal entry based on your previous prompt. 
 Once again, I would like you to respond with a question or prompt that helps me reflect more deeply on what I just wrote. 
-Please keep the tone simple and friendly, and it is importan that you keep your response to no more than 60 words. Here is my new entry: '''
+Please keep the tone simple and friendly, and it is important that you keep your response to no more than 60 words. Here is my new entry: '''
+# For any editing an entry
+prompt_edit = '''I just modified a previous journal entry I wrote. Please, let's start fresh from there. 
+I will now give you the modified entry, and I would like you to respond with a question or prompt that helps me reflect more deeply on what I just wrote. 
+Please keep the tone simple and friendly, and it is important that you keep your response to no more than 60 words. Here is my edited entry: '''
 
 
 # Default route
@@ -38,12 +42,13 @@ def home():
 # Route to interact with huggingchat
 @app.route('/get-prompt', methods=['GET', 'POST'])
 def get_prompt():
-    if request.json.get('entryNumber'):
+    if request.json.get('entryNumber') == '1':
         input = prompt_start + request.json.get('lastEntry')
+    elif request.json.get('entryNumber') == '-1':
+        input = prompt_edit + request.json.get('lastEntry')
     else: 
         input = prompt_later + request.json.get('lastEntry')
     output = chatbot.chat(input)
-    # print('output.text', output["text"], type(output.text), type(output["text"]))
     return jsonify({'prompt': output['text']})
 
 if __name__ == '__main__':
