@@ -1,41 +1,74 @@
 // Main journaling area
 const journal = document.querySelector('.journal')
 
-// Lists to store user entries and generated prompts
+// Lists to store user entries, buttons and generated prompts
+let entryWrappers = []; //maybe don't need this
 let journalEntries = [];
+let editBtns = [];
+let saveBtns = [];
 let prompts = [];
 
+// Backup of journal entry currently being edited
+let entryBackup = '';
+
 // Buttons to submit entry and reflect more or finish journaling
-let submitReflectBtn = document.createElement('button');
-submitReflectBtn.classList.add('reflect-btn');
+const submitReflectBtn = document.createElement('button');
+submitReflectBtn.classList.add('spaced-btn');
 submitReflectBtn.textContent = 'Submit & Reflect more';
 
-let submitFinishBtn = document.createElement('button');
-submitFinishBtn.classList.add('reflect-btn');
+const submitFinishBtn = document.createElement('button');
+submitFinishBtn.classList.add('spaced-btn');
 submitFinishBtn.textContent = 'Submit & Finish';
 
-let btnRow = document.createElement('div');
-btnRow.classList.add('row');
-let btnContainers = [document.createElement('div'), document.createElement('div')];
-btnContainers.forEach(function (container) {
-    container.className = 'col-sm-6 d-flex justify-content-center';
-    btnRow.appendChild(container);
-})
-btnContainers[0].appendChild(submitReflectBtn);
-btnContainers[1].appendChild(submitFinishBtn);
-
+const submitBtnRow = document.createElement('div');
+submitBtnRow.classList.add('btn-row');
+submitBtnRow.appendChild(submitReflectBtn);
+submitBtnRow.appendChild(submitFinishBtn);
 
 // Function to add a new journal entry
 function addJournalEntry(placeholder) {
-    let textarea = document.createElement('textarea');
+    // Wrapper for text area, edit buttons and save buttons
+    const wrapper = document.createElement('div');
+    entryWrappers.push(wrapper);
+
+    // Create text area and add it to array and journal container
+    const textarea = document.createElement('textarea');
     textarea.classList.add('journal-entry');
     textarea.placeholder = placeholder;
     textarea.autofocus = true;
     textarea.setAttribute('oninput', 'autoGrow(this)');
     journalEntries.push(textarea);
+    wrapper.appendChild(textarea);
 
-    journal.appendChild(textarea);
-    journal.appendChild(btnRow);
+    // Create button to edit entry (now hidden)
+    const editBtnRow = document.createElement('div');
+    editBtnRow.className = 'btn-row align-right hidden';
+    const editBtn = document.createElement('button');
+    editBtn.classList.add('small-btn');
+    editBtn.textContent = 'Edit'
+    editBtn.addEventListener('click', editEntry);
+    editBtns.push(editBtnRow);
+    editBtnRow.appendChild(editBtn)
+    wrapper.appendChild(editBtnRow);
+
+    // Create buttons to save changes to entry (now hidden)
+    const saveBtnsRow = document.createElement('div');
+    saveBtnsRow.className = 'btn-row hidden';
+    let saveBtnsGroup = [document.createElement('button'), document.createElement('button'), document.createElement('button')];
+    saveBtnsGroup[0].textContent = 'Save & Preserve below';
+    saveBtnsGroup[1].textContent = 'Save & Discard below';
+    saveBtnsGroup[2].textContent = 'Cancel';
+    saveBtnsGroup[2].addEventListener('click', editCancel);
+    saveBtnsGroup.forEach(function(btn) {
+        btn.classList.add('spaced-btn');
+        saveBtnsRow.appendChild(btn);
+    })
+    saveBtns.push(saveBtnsRow);
+    wrapper.appendChild(saveBtnsRow);
+
+    // Add wrapper and submit buttons to journal container
+    journal.appendChild(wrapper);
+    journal.appendChild(submitBtnRow);
 }
 
 // Function to make the entry text area grow as the user types more text
@@ -47,19 +80,33 @@ function autoGrow(textarea) {
 // Actions when Submit & Reflect is clicked
 submitReflectBtn.addEventListener('click', submitReflect);
 function submitReflect() {
-    journal.removeChild(btnRow);
+    // Exit if an edit is in progress
+    if (entryBackup !== '') {
+        return;
+    }
 
-    journalEntries[journalEntries.length - 1].disabled = true;
+    // Remove submit buttons
+    journal.removeChild(submitBtnRow);
 
+    const currentIndex = journalEntries.length - 1;
+
+    // Disable previous text area
+    journalEntries[currentIndex].disabled = true;
+
+    // Show edit button for previous text area
+    editBtns[currentIndex].classList.remove('hidden');
+
+    // Add div for the prompt with loading message
     let prompt = document.createElement('div');
     prompt.classList.add('prompt');
     prompt.innerHTML = 'Loading your prompt...';
     journal.appendChild(prompt);
 
+    // Get prompt from huggingchat
     fetch('/get-prompt', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({lastEntry: journalEntries[journalEntries.length - 1].value, entryNumber: journalEntries.length})
+        body: JSON.stringify({lastEntry: journalEntries[currentIndex].value, entryNumber: journalEntries.length})
     })
     .then(response => response.json())
     .then(data => {
@@ -71,6 +118,75 @@ function submitReflect() {
 
 }
 
+// Actions when Edit is clicked
+function editEntry() {
+    // Exit if an edit is in progress
+    if (entryBackup !== '') {
+        return;
+    }
+
+    const lastIndex = journalEntries.length - 1;
+    const currentBtnRow = this.parentNode;
+    const currentIndex = editBtns.indexOf(currentBtnRow);
+
+    // Save contents of current text area
+    entryBackup = journalEntries[currentIndex].value;
+    
+    // Enable current text area
+    journalEntries[currentIndex].disabled = false;
+
+    // Hide current edit button
+    currentBtnRow.classList.add('hidden')
+
+    // Disable all edit buttons
+    editBtns.forEach(function(row) {
+        btn = row.children[0];
+        btn.disabled = true;
+    })
+
+    // Show save buttons
+    saveBtns[currentIndex].classList.remove('hidden');
+
+    // Disable last text area
+    journalEntries[lastIndex].disabled = true;
+
+    // Disable submit buttons
+    submitReflectBtn.disabled = true;
+    submitFinishBtn.disabled = true;
+}
+
+// Actions when Cancel is clicked
+function editCancel() {
+    const lastIndex = journalEntries.length - 1;
+    const currentBtnRow = this.parentNode;
+    const currentIndex = saveBtns.indexOf(currentBtnRow);
+
+    // Restore contents of current text area and clear backup
+    journalEntries[currentIndex].value = entryBackup;
+    entryBackup = '';
+
+    // Disable current text area
+    journalEntries[currentIndex].disabled = true;
+
+    // Show current edit button
+    editBtns[currentIndex].classList.remove('hidden');
+
+    // Enable all edit buttons
+    editBtns.forEach(function(row) {
+        btn = row.children[0];
+        btn.disabled = false;
+    })
+
+    // Hide save buttons
+    currentBtnRow.classList.add('hidden');
+
+    // Enable last text area
+    journalEntries[lastIndex].disabled = false;
+
+    // Enable submit buttons
+    submitReflectBtn.disabled = false;
+    submitFinishBtn.disabled = false;
+}
 
 
 addJournalEntry('Start journaling...');

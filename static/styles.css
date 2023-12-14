@@ -31,7 +31,7 @@ nav.navbar {
 
 .journal-entry {
     min-height: 100px;
-    resize: vertical;
+    resize: none;
     overflow-y: hidden;
     width: 100%;
 }
@@ -41,7 +41,17 @@ nav.navbar {
     color: #000;
 }
 
-button.reflect-btn {
+.btn-row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.align-right {
+    justify-content: flex-end;
+}
+
+button.spaced-btn {
     border: none;
     padding: 8px 16px;
     border-radius: 30px;
@@ -49,6 +59,29 @@ button.reflect-btn {
     font-weight: 500;
     cursor: pointer;
     background-color: #e09b80;
+    margin: 5px 50px;
+}
+
+button.spaced-btn:disabled {
+    cursor: default;
+}
+
+button.small-btn {
+    border: none;
+    padding: 5px 10px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    background-color: #e09b80;
+}
+
+button.small-btn:disabled {
+    cursor: default;
+}
+
+.hidden {
+    display: none;
 }
 
 .prompt {

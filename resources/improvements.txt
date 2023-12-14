@@ -1,5 +1,9 @@
+disable edit while loading prompt
+
 disable submit & reflect more for empty entry
 
-the colors!
+add explanatory / info page
+
+the colors! (bg: gradient, position: fixed)
 
 smoother transitions for adding/removing elements, prompt loading
