@@ -1,5 +1,5 @@
 // Main journaling area
-const journal = document.querySelector('.journal')
+const journal = document.querySelector('.journal');
 
 // Lists to store user entries, buttons and generated prompts
 let entryWrappers = []; 
@@ -122,7 +122,7 @@ function submitReflect(edit=false) {
 
 // Actions when Edit is clicked
 function editEntry() {
-    // Exit if an edit is in progress
+    // Exit if another edit is in progress
     if (entryBackup !== '') {
         return;
     }
@@ -257,6 +257,71 @@ function editCancel() {
     // Enable submit buttons
     submitReflectBtn.disabled = false;
     submitFinishBtn.disabled = false;
+}
+
+// Actions when Submit & Finish is clicked
+submitFinishBtn.addEventListener('click', submitFinish);
+const modal = document.querySelector('#formatSelectorModal');
+function submitFinish() {
+    modal.classList.add('show');
+}
+
+// Close button actions
+const closeModalBtn = document.querySelector('#close');
+closeModalBtn.addEventListener('click', closeModal);
+const closeCross = document.querySelector('.modal-header .close');
+closeCross.addEventListener('click', closeModal);
+function closeModal () {
+    modal.classList.remove('show');
+}
+
+// Download button actions
+const allowedFormats = ['pdf', 'docx', 'txt'];
+const downloadBtn = document.querySelector('#download');
+const radioInputs = Array.from(document.getElementsByClassName('form-check-input'));
+downloadBtn.addEventListener('click', download);
+function download() {
+    // Get and validate file format
+    let format = '';
+    radioInputs.forEach(function (input) {
+        if (input.checked) {
+            format = input.value;
+            return;
+        }
+    })
+    if (!allowedFormats.includes(format)) {
+        return;
+    }
+
+    console.log(format);
+
+    // Prepare prompts and entries arrays
+    const journalEntriesText = Array.from(journalEntries).map(entry => entry.value);
+    const promptsText = Array.from(prompts).map(prompt => prompt.innerHTML);
+
+    // Request to process text
+    fetch('/download', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({format: format, entries: journalEntriesText, prompts: promptsText})
+    })
+    .then(response => response.blob())
+    .then(blob => {
+        // Create a Blob object and generate a URL
+        const fileURL = URL.createObjectURL(blob);
+    
+        // Create an anchor element to trigger the download
+        const a = document.createElement('a');
+        a.href = fileURL;
+        a.download = 'journal.' + format; // Set the filename
+        a.click();
+    
+        // Clean up by revoking the object URL
+        URL.revokeObjectURL(fileURL);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 }
 
 

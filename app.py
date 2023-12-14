@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_file
 from hugchat import hugchat
 from hugchat.login import Login
+from write_files import write_docx, write_pdf, write_txt
 
 # Start app
 app = Flask(__name__)
@@ -39,6 +40,7 @@ Please keep the tone simple and friendly, and it is important that you keep your
 def home():
     return render_template('layout.html')
 
+
 # Route to interact with huggingchat
 @app.route('/get-prompt', methods=['GET', 'POST'])
 def get_prompt():
@@ -50,6 +52,23 @@ def get_prompt():
         input = prompt_later + request.json.get('lastEntry')
     output = chatbot.chat(input)
     return jsonify({'prompt': output['text']})
+
+
+@app.route('/download', methods=['GET', 'POST'])
+def download():
+    format = request.json.get('format')
+    entries = request.json.get('entries', [])
+    prompts = request.json.get('prompts', [])
+
+    if format == 'pdf':
+        return send_file(write_pdf(entries, prompts), as_attachment=True, mimetype='application/pdf', download_name='journal.pdf')
+    elif format == 'docx':
+        output = write_docx(entries, prompts)
+    elif format == 'txt':
+        return send_file(write_txt(entries, prompts), as_attachment=True, mimetype='text/plain', download_name='journal.txt')
+    
+    return None
+
 
 if __name__ == '__main__':
     app.run(debug=True)

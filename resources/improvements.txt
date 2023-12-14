@@ -1,9 +1,17 @@
+customize download buttons
+
 disable edit while loading prompt
 
 disable submit & reflect more for empty entry
 
+add new session button in modal
+
 add explanatory / info page
 
 the colors! (bg: gradient, position: fixed)
+
+add title to file
+
+shorten 1-line function in js
 
 smoother transitions for adding/removing elements, prompt loading
