@@ -63,7 +63,7 @@ def download():
     if format == 'pdf':
         return send_file(write_pdf(entries, prompts), as_attachment=True, mimetype='application/pdf', download_name='journal.pdf')
     elif format == 'docx':
-        output = write_docx(entries, prompts)
+        return send_file(write_docx(entries, prompts), as_attachment=True, download_name='journal.docx')
     elif format == 'txt':
         return send_file(write_txt(entries, prompts), as_attachment=True, mimetype='text/plain', download_name='journal.txt')
     
