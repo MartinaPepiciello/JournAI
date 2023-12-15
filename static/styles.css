@@ -51,7 +51,7 @@ nav.navbar {
     justify-content: flex-end;
 }
 
-button.spaced-btn {
+.my-btn {
     border: none;
     padding: 8px 16px;
     border-radius: 30px;
@@ -59,25 +59,21 @@ button.spaced-btn {
     font-weight: 500;
     cursor: pointer;
     background-color: #e09b80;
+    margin: 5px
+}
+
+.my-btn:disabled {
+    cursor: default;
+}
+
+.spaced {
     margin: 5px 50px;
 }
 
-button.spaced-btn:disabled {
-    cursor: default;
-}
-
-button.small-btn {
-    border: none;
+.small {
     padding: 5px 10px;
-    border-radius: 30px;
     font-size: 12px;
-    font-weight: 500;
-    cursor: pointer;
-    background-color: #e09b80;
-}
-
-button.small-btn:disabled {
-    cursor: default;
+    margin: 0;
 }
 
 .hidden {

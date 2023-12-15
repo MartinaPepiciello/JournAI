@@ -1,9 +1,3 @@
-customize download buttons
-
-disable edit while loading prompt
-
-disable submit & reflect more for empty entry
-
 add new session button in modal
 
 add explanatory / info page

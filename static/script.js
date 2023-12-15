@@ -13,11 +13,11 @@ let entryBackup = '';
 
 // Buttons to submit entry and reflect more or finish journaling
 const submitReflectBtn = document.createElement('button');
-submitReflectBtn.classList.add('spaced-btn');
+submitReflectBtn.className = 'my-btn spaced';
 submitReflectBtn.textContent = 'Submit & Reflect more';
 
 const submitFinishBtn = document.createElement('button');
-submitFinishBtn.classList.add('spaced-btn');
+submitFinishBtn.className = 'my-btn spaced';
 submitFinishBtn.textContent = 'Submit & Finish';
 
 const submitBtnRow = document.createElement('div');
@@ -40,12 +40,13 @@ function addJournalEntry(placeholder) {
     journalEntries.push(textarea);
     wrapper.appendChild(textarea);
 
-    // Create button to edit entry (now hidden)
+    // Create button to edit entry (now hidden and disabled)
     const editBtnRow = document.createElement('div');
     editBtnRow.className = 'btn-row align-right hidden';
     const editBtn = document.createElement('button');
-    editBtn.classList.add('small-btn');
+    editBtn.className = 'my-btn small';
     editBtn.textContent = 'Edit'
+    editBtn.disabled = true;
     editBtn.addEventListener('click', editEntry);
     editBtns.push(editBtnRow);
     editBtnRow.appendChild(editBtn)
@@ -62,7 +63,7 @@ function addJournalEntry(placeholder) {
     saveBtnsGroup[2].textContent = 'Cancel';
     saveBtnsGroup[2].addEventListener('click', editCancel);
     saveBtnsGroup.forEach(function(btn) {
-        btn.classList.add('spaced-btn');
+        btn.className = 'my-btn spaced';
         saveBtnsRow.appendChild(btn);
     })
     saveBtns.push(saveBtnsRow);
@@ -76,7 +77,7 @@ function addJournalEntry(placeholder) {
 // Function to make the entry text area grow as the user types more text
 function autoGrow(textarea) {
     textarea.style.height = 'auto';
-    textarea.style.height = textarea.scrollHeight + 'px';
+    textarea.style.height = (textarea.scrollHeight + 5).toString() + 'px';
 }
 
 // Actions when Submit & Reflect is clicked
@@ -115,6 +116,7 @@ function submitReflect(edit=false) {
         prompt.innerHTML = data.prompt;
         prompts.push(prompt);
         addJournalEntry('Continue journaling...')
+        editBtns[currentIndex].children[0].disabled = false;
     })
     .catch(error => console.error('Error:', error));
 
