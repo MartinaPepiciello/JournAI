@@ -11,6 +11,7 @@ let prompts = [''];
 // Backup of journal entry currently being edited
 let entryBackup = '';
 
+
 // Buttons to submit entry and reflect more or finish journaling
 const submitReflectBtn = document.createElement('button');
 submitReflectBtn.className = 'my-btn spaced';
@@ -24,6 +25,7 @@ const submitBtnRow = document.createElement('div');
 submitBtnRow.classList.add('btn-row');
 submitBtnRow.appendChild(submitReflectBtn);
 submitBtnRow.appendChild(submitFinishBtn);
+
 
 // Function to add a new journal entry
 function addJournalEntry(placeholder) {
@@ -74,6 +76,7 @@ function addJournalEntry(placeholder) {
     journal.appendChild(submitBtnRow);
 }
 
+
 // Function to make the entry text area grow as the user types more text
 function autoGrow(textarea) {
     textarea.style.height = 'auto';
@@ -122,6 +125,7 @@ function submitReflect(edit=false) {
 
 }
 
+
 // Actions when Edit is clicked
 function editEntry() {
     // Exit if another edit is in progress
@@ -159,6 +163,7 @@ function editEntry() {
     submitFinishBtn.disabled = true;
 }
 
+
 // Actions when Save & Preserve below is clicked
 function editSavePreserve() {
     const lastIndex = journalEntries.length - 1;
@@ -190,6 +195,7 @@ function editSavePreserve() {
     submitReflectBtn.disabled = false;
     submitFinishBtn.disabled = false;
 }
+
 
 // Actions when Save & Remove below is clicked
 function editSaveRemove() {
@@ -228,6 +234,7 @@ function editSaveRemove() {
     submitReflect(true);
 }
 
+
 // Actions when Cancel is clicked
 function editCancel() {
     const lastIndex = journalEntries.length - 1;
@@ -261,21 +268,23 @@ function editCancel() {
     submitFinishBtn.disabled = false;
 }
 
+
 // Actions when Submit & Finish is clicked
 submitFinishBtn.addEventListener('click', submitFinish);
-const modal = document.querySelector('#formatSelectorModal');
+const downloadModal = document.querySelector('#formatSelectorModal');
 function submitFinish() {
-    modal.classList.add('show');
+    downloadModal.classList.add('show');
 }
 
-// Close button actions
-const closeModalBtn = document.querySelector('#close');
-closeModalBtn.addEventListener('click', closeModal);
-const closeCross = document.querySelector('.modal-header .close');
-closeCross.addEventListener('click', closeModal);
-function closeModal () {
-    modal.classList.remove('show');
+
+// Close buttons actions
+const modals = Array.from(document.querySelectorAll('.modal'));
+const closeModalBtns = Array.from(document.querySelectorAll('.close-modal'));
+closeModalBtns.forEach(btn => btn.addEventListener('click', closeModals));
+function closeModals () {
+    modals.forEach(m => m.classList.remove('show'))
 }
+
 
 // Download button actions
 const allowedFormats = ['pdf', 'docx', 'txt'];
@@ -325,6 +334,25 @@ function download() {
         console.error('Error:', error);
     });
 }
+
+
+// Download + New session button actions
+const downloadRefreshBtn = document.querySelector('#download-refresh');
+downloadRefreshBtn.addEventListener('click', function () {
+    download();
+    setTimeout(() => location.reload(), 2000);
+})
+
+
+// Navbar new session
+newSessionTxt = document.querySelector('#new-session');
+newSessionModal = document.querySelector('#newSessionModal');
+newSessionTxt.addEventListener('click', () => newSessionModal.classList.add('show'));
+
+
+// Confirm new session modal
+newSessionBtn = document.querySelector('#confirm-new-session');
+newSessionBtn.addEventListener('click', () => location.reload());
 
 
 addJournalEntry('Start journaling...');

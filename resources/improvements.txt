@@ -1,5 +1,3 @@
-add new session button in modal
-
 add explanatory / info page
 
 the colors! (bg: gradient, position: fixed)

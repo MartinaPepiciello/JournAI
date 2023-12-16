@@ -19,6 +19,11 @@ nav.navbar {
     color: #a7342b;
 }
 
+.navbar-text {
+    padding: 0.5rem;
+    cursor: pointer;
+}
+
 .journal {
     background-color: #fff;
     max-width: 1200px;
@@ -94,6 +99,10 @@ nav.navbar {
 .modal-header {
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
+}
+
+#download-refresh {
+    margin-right: 70px;
 }
 
 .overlay {
