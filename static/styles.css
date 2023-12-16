@@ -1,22 +1,27 @@
 body {
-    background-color: #7e8e65;
-    font-family: 'Playfair Display', Times, serif;
+    font-family: 'Merriweather', Times, serif;
+    background-image: linear-gradient( 111.5deg, #dcf3ff 21.9%, #ffd4bb 92.2% );
+    background-attachment: fixed;
 }
 
 nav.navbar {
-    background-color: #f0f2f4;
+    background-color: #fff;
     box-shadow: 0 0 15px #00000055;
 }
 
 .navbar-light .navbar-brand {
-    font-family: 'Playfair Display', Times, serif;
+    font-family: 'Merriweather', Times, serif;
     font-size: 30px;
     font-weight: 800;
-    color: #556043;
+    color: #8ad3ef;
 }
 
 .navbar-light .navbar-brand span {
-    color: #a7342b;
+    color: #ef9159;
+}
+
+.navbar-light .navbar-brand:hover {
+    color: #212529 !important;
 }
 
 .navbar-text {
@@ -29,9 +34,8 @@ nav.navbar {
     max-width: 1200px;
     margin: 30px auto;
     border-radius: 30px;
-    padding: 20px;
+    padding: 40px;
     box-shadow: 0 0 15px #00000055;
-    /* height: 100px; */
 }
 
 .journal-entry {
@@ -63,8 +67,20 @@ nav.navbar {
     font-size: 18px;
     font-weight: 500;
     cursor: pointer;
-    background-color: #e09b80;
+    background-color: #ef9159;
     margin: 5px
+}
+
+.my-btn:hover, my-btn:active {
+    box-shadow: 0 0px 13px #ef9159cc;
+}
+
+.accent {
+    background-color: #8ad3ef;
+}
+
+.accent:hover, my-btn:active {
+    box-shadow: 0 0px 13px #8ad3efcc;
 }
 
 .my-btn:disabled {
@@ -120,7 +136,15 @@ nav.navbar {
     display: block;
 }
 
-/* Display the overlay when the modal is shown */
-.modal.show ~ .overlay {
+.modal.show ~ .overlay { /* display the overlay when the modal is shown */
     display: block;
+}
+
+
+.journal h1 {
+    margin-bottom: 20px;
+}
+
+.spacer {
+    height: 40px;
 }

@@ -37,8 +37,14 @@ Please keep the tone simple and friendly, and it is important that you keep your
 
 # Default route
 @app.route('/')
-def home():
-    return render_template('layout.html')
+def index():
+    return render_template('index.html')
+
+
+# About route
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
 
 # Route to interact with huggingchat

@@ -18,7 +18,7 @@ submitReflectBtn.className = 'my-btn spaced';
 submitReflectBtn.textContent = 'Submit & Reflect more';
 
 const submitFinishBtn = document.createElement('button');
-submitFinishBtn.className = 'my-btn spaced';
+submitFinishBtn.className = 'my-btn accent spaced';
 submitFinishBtn.textContent = 'Submit & Finish';
 
 const submitBtnRow = document.createElement('div');
@@ -46,7 +46,7 @@ function addJournalEntry(placeholder) {
     const editBtnRow = document.createElement('div');
     editBtnRow.className = 'btn-row align-right hidden';
     const editBtn = document.createElement('button');
-    editBtn.className = 'my-btn small';
+    editBtn.className = 'my-btn accent small';
     editBtn.textContent = 'Edit'
     editBtn.disabled = true;
     editBtn.addEventListener('click', editEntry);
@@ -68,6 +68,7 @@ function addJournalEntry(placeholder) {
         btn.className = 'my-btn spaced';
         saveBtnsRow.appendChild(btn);
     })
+    saveBtnsGroup[2].classList.add('accent')
     saveBtns.push(saveBtnsRow);
     wrapper.appendChild(saveBtnsRow);
 
@@ -279,7 +280,7 @@ function submitFinish() {
 
 // Close buttons actions
 const modals = Array.from(document.querySelectorAll('.modal'));
-const closeModalBtns = Array.from(document.querySelectorAll('.close-modal'));
+const closeModalBtns = Array.from(document.querySelectorAll('.close-modal, .close'));
 closeModalBtns.forEach(btn => btn.addEventListener('click', closeModals));
 function closeModals () {
     modals.forEach(m => m.classList.remove('show'))
@@ -353,6 +354,7 @@ newSessionTxt.addEventListener('click', () => newSessionModal.classList.add('sho
 // Confirm new session modal
 newSessionBtn = document.querySelector('#confirm-new-session');
 newSessionBtn.addEventListener('click', () => location.reload());
+
 
 
 addJournalEntry('Start journaling...');

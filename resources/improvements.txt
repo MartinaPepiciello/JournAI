@@ -2,6 +2,10 @@ add explanatory / info page
 
 the colors! (bg: gradient, position: fixed)
 
+about + new session should not disappear for small screens
+
+warning for leaving main page (to about)
+
 add title to file
 
 shorten 1-line function in js

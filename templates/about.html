@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+
+{% block main %}
+    <h1>What is JournAI?</h1>
+    <p>JournAI is an AI-assisted journaling tool.</p>
+    <p>When journaling with JournAI, you are no longer alone with your thoughts. 
+        Whenever you wish, you can request a prompt or question that will help you reflect more deeply about what you just wrote. 
+        All questions will be aimed at unlocking your understanding of your own thoughts and feelings, and will be tailored to your previous entries in the same session.</p>
+    <p>Start journaling about anything that's on your mind now and experience the impact of an AI assistant that is fully integrated into your diary!</p>
+    <div class="spacer"></div>
+
+    <h1>What should I know about JournAI to get the best experience?</h1>
+    <p>JournAI is powered by the Huggingchat AI chatbot. JournAI takes care of communicating to the chatbot that you would like a prompt to dive more deeply into your thoughts; 
+        as with every AI chatbot, however, you are more likely to get helpful responses if the entries you type describe your experiences and problems accurately enough.</p>
+    <p>JournAI enables you to change any previous entry you wrote.
+        After you finish editing it, you can choose to keep all the content that follows it the same as before, or to discard it and restart the conversation at the entry you just edited.
+        If you choose the latter option, all content after the entry you edited will be lost, including both the AI-generated prompts and your entries.</p>
+    <div class="spacer"></div>
+
+    <h1>How can I save my journaling session?</h1>
+    <p>At any point during your session, you can choose to download its contents by clicking the "Submit & Finish" button.
+        At the moment, you can download your session either in PDF, DOCX or TXT.
+        Your download file will include both your enries and the AI-generated prompts.</p>
+{% endblock %}
+
+
+{% block modals %}{% endblock %}
+
+
+{% block js %}
+    <script src="../static/helpers.js"></script>
+{% endblock %}
