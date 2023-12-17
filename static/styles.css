@@ -9,24 +9,35 @@ nav.navbar {
     box-shadow: 0 0 15px #00000055;
 }
 
-.navbar-light .navbar-brand {
+.journai {
     font-family: 'Merriweather', Times, serif;
     font-size: 30px;
     font-weight: 800;
     color: #8ad3ef;
 }
 
-.navbar-light .navbar-brand span {
+.journai span {
     color: #ef9159;
 }
 
-.navbar-light .navbar-brand:hover {
-    color: #212529 !important;
+.journai:hover {
+    text-shadow: 0 0px 13px #8ad3efcc;
+    text-decoration: none;
+    color: #8ad3ef;
 }
 
 .navbar-text {
     padding: 0.5rem;
     cursor: pointer;
+}
+
+span.options {
+    color: #212529 !important;
+}
+
+span.options:hover {
+    color: #212529 !important;
+    text-decoration: underline;
 }
 
 .journal {
@@ -65,7 +76,7 @@ nav.navbar {
     padding: 8px 16px;
     border-radius: 30px;
     font-size: 18px;
-    font-weight: 500;
+    font-weight: 700;
     cursor: pointer;
     background-color: #ef9159;
     margin: 5px
@@ -105,7 +116,7 @@ nav.navbar {
     font-weight: 600;
     font-style: italic;
     font-size: 18px;
-    margin: 20px 0 0 0;
+    margin: 20px 0 10px 0;
 }
 
 .modal-content {
@@ -118,7 +129,7 @@ nav.navbar {
 }
 
 #download-refresh {
-    margin-right: 70px;
+    margin-right: 40px;
 }
 
 .overlay {
