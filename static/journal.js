@@ -16,6 +16,7 @@ let entryBackup = '';
 const submitReflectBtn = document.createElement('button');
 submitReflectBtn.className = 'my-btn spaced';
 submitReflectBtn.textContent = 'Submit & Reflect more';
+submitReflectBtn.disabled = true;
 
 const submitFinishBtn = document.createElement('button');
 submitFinishBtn.className = 'my-btn accent spaced';
@@ -38,7 +39,7 @@ function addJournalEntry(placeholder) {
     textarea.classList.add('journal-entry');
     textarea.placeholder = placeholder;
     textarea.autofocus = true;
-    textarea.setAttribute('oninput', 'autoGrow(this)');
+    textarea.setAttribute('oninput', 'growCheck(this)');
     journalEntries.push(textarea);
     wrapper.appendChild(textarea);
 
@@ -74,14 +75,30 @@ function addJournalEntry(placeholder) {
 
     // Add wrapper and submit buttons to journal container
     journal.appendChild(wrapper);
+    submitReflectBtn.disabled = true;
     journal.appendChild(submitBtnRow);
 }
 
 
-// Function to make the entry text area grow as the user types more text
-function autoGrow(textarea) {
+// Grow entry as the user types more text and check for empty entry
+function growCheck(textarea) {
     textarea.style.height = 'auto';
     textarea.style.height = (textarea.scrollHeight + 5).toString() + 'px';
+
+    currentIndex = journalEntries.indexOf(textarea);
+    if (textarea.value.trim() === '') {
+        saveBtns[currentIndex].children[0].disabled = true;
+        saveBtns[currentIndex].children[1].disabled = true;
+        if (entryBackup === '') {
+            submitReflectBtn.disabled = true;
+        }
+    } else {
+        saveBtns[currentIndex].children[0].disabled = false;
+        saveBtns[currentIndex].children[1].disabled = false;
+        if (entryBackup === '') {
+            submitReflectBtn.disabled = false;
+        }
+    }
 }
 
 // Actions when Submit & Reflect is clicked
@@ -271,11 +288,8 @@ function editCancel() {
 
 
 // Actions when Submit & Finish is clicked
-submitFinishBtn.addEventListener('click', submitFinish);
 const downloadModal = document.querySelector('#formatSelectorModal');
-function submitFinish() {
-    downloadModal.classList.add('show');
-}
+submitFinishBtn.addEventListener('click', () => downloadModal.classList.add('show'));
 
 
 // Close buttons actions
@@ -345,15 +359,9 @@ downloadRefreshBtn.addEventListener('click', function () {
 })
 
 
-// Navbar new session
-newSessionTxt = document.querySelector('#new-session');
-newSessionModal = document.querySelector('#newSessionModal');
-newSessionTxt.addEventListener('click', () => newSessionModal.classList.add('show'));
-
-
-// Confirm new session modal
-newSessionBtn = document.querySelector('#confirm-new-session');
-newSessionBtn.addEventListener('click', () => location.reload());
+// Make all links open in a new tab to avoid losing journaling sessions
+const links = Array.from(document.querySelectorAll('a'));
+links.forEach(link => link.setAttribute('target', '_blank'));
 
 
 

@@ -9,6 +9,10 @@ nav.navbar {
     box-shadow: 0 0 15px #00000055;
 }
 
+div#navbarNav {
+    justify-content: flex-end;
+}
+
 .journai {
     font-family: 'Merriweather', Times, serif;
     font-size: 30px;
@@ -26,18 +30,14 @@ nav.navbar {
     color: #8ad3ef;
 }
 
-.navbar-text {
-    padding: 0.5rem;
-    cursor: pointer;
+.nav-link {
+    display: block;
+    padding: 0.5rem 1rem;
+    float: right;
 }
 
-span.options {
-    color: #212529 !important;
-}
-
-span.options:hover {
-    color: #212529 !important;
-    text-decoration: underline;
+.navbar-light .navbar-toggler {
+    border: none;
 }
 
 .journal {
@@ -73,16 +73,17 @@ span.options:hover {
 
 .my-btn {
     border: none;
-    padding: 8px 16px;
+    padding: 15px 16px;
     border-radius: 30px;
     font-size: 18px;
     font-weight: 700;
     cursor: pointer;
     background-color: #ef9159;
-    margin: 5px
+    margin: 5px;
+    line-height: 1;
 }
 
-.my-btn:hover, my-btn:active {
+.my-btn:not(:disabled):hover {
     box-shadow: 0 0px 13px #ef9159cc;
 }
 
@@ -90,7 +91,7 @@ span.options:hover {
     background-color: #8ad3ef;
 }
 
-.accent:hover, my-btn:active {
+.accent:not(:disabled):hover {
     box-shadow: 0 0px 13px #8ad3efcc;
 }
 
@@ -129,7 +130,7 @@ span.options:hover {
 }
 
 #download-refresh {
-    margin-right: 40px;
+    margin-right: 47px;
 }
 
 .overlay {
