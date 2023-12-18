@@ -1,3 +1,1 @@
-add title to file
-
 smoother transitions for adding/removing elements, prompt loading

@@ -83,7 +83,7 @@ function addJournalEntry(placeholder) {
 // Grow entry as the user types more text and check for empty entry
 function growCheck(textarea) {
     textarea.style.height = 'auto';
-    textarea.style.height = (textarea.scrollHeight + 5).toString() + 'px';
+    textarea.style.height = textarea.scrollHeight + 'px';
 
     currentIndex = journalEntries.indexOf(textarea);
     if (textarea.value.trim() === '') {

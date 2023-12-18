@@ -21,7 +21,7 @@ def write_pdf(title, entries, prompts):
     # Set up the starting position for the text
     x, y = 50, height - 50
 
-    # Create a ParagraphStyle for justified text
+    # Create paragraph styles
     justified_normal = ParagraphStyle(
         name='JustifyNormal',
         fontName='Times-Roman',
@@ -32,16 +32,23 @@ def write_pdf(title, entries, prompts):
         name='JustifyBold',
         fontName='Times-Bold',
         fontSize=12,
-        alignment=4  # 4 represents 'Justify'
+        alignment=4
     )
 
+    title_style = ParagraphStyle(
+        name='Title',
+        fontName='Times-Bold',
+        fontSize=16,
+        alignment=4
+    )
+
+    x, y = add_pdf_paragraphs(title, title_style, c, x, y, width, height)
+    y -= 30
+
     # Write prompts and entries in the PDF
-    c.setFont("Times-Roman", 12)
     for prompt, entry in zip(prompts, entries):
         if prompt:
-            c.setFont("Times-Bold", 12)
             x, y = add_pdf_paragraphs(prompt, justified_bold, c, x, y, width, height)
-            c.setFont("Times-Roman", 12)
         x, y = add_pdf_paragraphs(entry, justified_normal, c, x, y, width, height)
         y -= 20
 
@@ -59,6 +66,16 @@ def write_docx(title, entries, prompts):
 
     # Create Document object
     doc = docx.Document()
+
+    # Add title
+    title_paragraph = doc.add_paragraph()
+    title_run = title_paragraph.add_run(title)
+    title_run.font.name = 'Times New Roman'
+    title_run.font.size = docx.shared.Pt(16)
+    title_run.bold = True
+    doc.add_paragraph()
+
+    # Regular font style
     doc.styles['Normal'].font.name = 'Times New Roman'
     doc.styles['Normal'].font.size = docx.shared.Pt(12)
 
