@@ -63,15 +63,17 @@ def get_prompt():
 @app.route('/download', methods=['GET', 'POST'])
 def download():
     format = request.json.get('format')
+    title = request.json.get('title')
     entries = request.json.get('entries', [])
     prompts = request.json.get('prompts', [])
+    download_name = (title if title else 'journal') + '.' + format
 
     if format == 'pdf':
-        return send_file(write_pdf(entries, prompts), as_attachment=True, mimetype='application/pdf', download_name='journal.pdf')
+        return send_file(write_pdf(title, entries, prompts), as_attachment=True, mimetype='application/pdf', download_name=download_name)
     elif format == 'docx':
-        return send_file(write_docx(entries, prompts), as_attachment=True, download_name='journal.docx')
+        return send_file(write_docx(title, entries, prompts), as_attachment=True, download_name=download_name)
     elif format == 'txt':
-        return send_file(write_txt(entries, prompts), as_attachment=True, mimetype='text/plain', download_name='journal.txt')
+        return send_file(write_txt(title, entries, prompts), as_attachment=True, mimetype='text/plain', download_name=download_name)
     
     return None
 

@@ -130,7 +130,7 @@ function submitReflect(edit=false) {
     fetch('/get-prompt', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({lastEntry: journalEntries[currentIndex].value, entryNumber: (edit? -1 : journalEntries.length)})
+        body: JSON.stringify({lastEntry: journalEntries[currentIndex].value, entryNumber: (edit ? -1 : journalEntries.length)})
     })
     .then(response => response.json())
     .then(data => {
@@ -305,7 +305,9 @@ function closeModals () {
 const allowedFormats = ['pdf', 'docx', 'txt'];
 const downloadBtn = document.querySelector('#download');
 const radioInputs = Array.from(document.getElementsByClassName('form-check-input'));
+const journalTitleInput = document.querySelector('#journal-title');
 downloadBtn.addEventListener('click', download);
+
 function download() {
     // Get and validate file format
     let format = '';
@@ -319,17 +321,17 @@ function download() {
         return;
     }
 
-    console.log(format);
-
     // Prepare prompts and entries arrays
     const journalEntriesText = Array.from(journalEntries).map(entry => entry.value);
     const promptsText = Array.from(prompts).map(prompt => prompt.innerHTML);
+
+    journalTitle = journalTitleInput.value.trim()
 
     // Request to process text
     fetch('/download', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({format: format, entries: journalEntriesText, prompts: promptsText})
+        body: JSON.stringify({format: format, title: journalTitle, entries: journalEntriesText, prompts: promptsText})
     })
     .then(response => response.blob())
     .then(blob => {
@@ -339,7 +341,7 @@ function download() {
         // Create an anchor element to trigger the download
         const a = document.createElement('a');
         a.href = fileURL;
-        a.download = 'journal.' + format; // Set the filename
+        a.download = (journalTitle ? journalTitle : 'journal') + '.' + format; // Set the filename
         a.click();
     
         // Clean up by revoking the object URL

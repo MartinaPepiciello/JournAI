@@ -10,12 +10,13 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Select Download Format</h5>
+                    <h5 class="modal-title">Download</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
+                    <p>Select Download Format</p>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="downloadFormat" id="pdfOption" value="pdf">
                         <label class="form-check-label" for="pdfOption">
@@ -34,6 +35,10 @@
                           TXT
                       </label>
                   </div>
+                </div>
+                <div class="modal-body">
+                    <p>Add a title to your journal (optional)</p>
+                    <input type="text" class="form-control" id="journal-title" placeholder="Your title">
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="my-btn" id="download-refresh">Download &<br>Start new session</button>

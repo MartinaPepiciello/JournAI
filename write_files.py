@@ -8,7 +8,7 @@ from reportlab.platypus import Paragraph
 import docx
 
 
-def write_pdf(entries, prompts):
+def write_pdf(title, entries, prompts):
     # Create a BytesIO object to store the PDF
     output = io.BytesIO()
 
@@ -53,7 +53,7 @@ def write_pdf(entries, prompts):
     return output
 
 
-def write_docx(entries, prompts):
+def write_docx(title, entries, prompts):
     # Create a BytesIO object to store the document in memory
     output = io.BytesIO()
 
@@ -76,9 +76,11 @@ def write_docx(entries, prompts):
     return output
 
 
-def write_txt(entries, prompts):
+def write_txt(title, entries, prompts):
     # Create the content for the text file
     content = ''
+    if title:
+        content += title.upper() + '\n\n'
     for prompt, entry in zip(prompts, entries):
         content += (prompt + '\n') if prompt else ''
         content += entry + '\n\n'

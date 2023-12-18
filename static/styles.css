@@ -152,6 +152,15 @@ div#navbarNav {
     display: block;
 }
 
+.modal-body {
+    border-top: 1px solid #e9ecef;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.form-check {
+    display: inline-block;
+    margin-right: 2rem;
+}
 
 .journal h1 {
     margin-bottom: 20px;
