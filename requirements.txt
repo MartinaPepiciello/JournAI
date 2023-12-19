@@ -1,6 +1,5 @@
 flask
 jinja2
 hugchat
-io
 reportlab
 python-docx
