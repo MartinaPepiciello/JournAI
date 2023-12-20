@@ -42,8 +42,10 @@ def write_pdf(title, entries, prompts):
         alignment=4
     )
 
-    x, y = add_pdf_paragraphs(title, title_style, c, x, y, width, height)
-    y -= 30
+    # Write title
+    if title:
+        x, y = add_pdf_paragraphs(title, title_style, c, x, y, width, height)
+        y -= 30
 
     # Write prompts and entries in the PDF
     for prompt, entry in zip(prompts, entries):
@@ -68,12 +70,13 @@ def write_docx(title, entries, prompts):
     doc = docx.Document()
 
     # Add title
-    title_paragraph = doc.add_paragraph()
-    title_run = title_paragraph.add_run(title)
-    title_run.font.name = 'Times New Roman'
-    title_run.font.size = docx.shared.Pt(16)
-    title_run.bold = True
-    doc.add_paragraph()
+    if title:
+        title_paragraph = doc.add_paragraph()
+        title_run = title_paragraph.add_run(title)
+        title_run.font.name = 'Times New Roman'
+        title_run.font.size = docx.shared.Pt(16)
+        title_run.bold = True
+        doc.add_paragraph()
 
     # Regular font style
     doc.styles['Normal'].font.name = 'Times New Roman'
