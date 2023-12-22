@@ -20,4 +20,4 @@ When an entry is submitted, the corresponding text box becomes disabled to avoid
 
 When the user is satisfied with their journaling, they can click on "Submit & Finish". This will trigger a popup modal where they can download their journaling session in either PDF, DOCX or TXT format. If they wish, they can also choose to add a title to their session, which will appear at the top of the document and as the file name. They can also choose to start a new journaling session right after downloading.
 
-In the navigation bar, there is a link to an About page, which contains a summary of the features of the app, and a link to start a new entry. When the user is on the main journaling page, these links will open in a new tab to avoid losing the progress on the current page.
+In the navigation bar, there is a link to an About page, which contains a summary of the features of the app, and a link to start a new entry. When the user is on the main journaling page, these links will open in a new tab if they have entered any text, to avoid losing the progress on the current page.

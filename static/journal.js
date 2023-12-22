@@ -361,9 +361,16 @@ downloadRefreshBtn.addEventListener('click', function () {
 })
 
 
-// Make all links open in a new tab to avoid losing journaling sessions
+// Make all links open in a new tab if some text has been entered to avoid losing journaling sessions
 const links = Array.from(document.querySelectorAll('a'));
-links.forEach(link => link.setAttribute('target', '_blank'));
+links.forEach(link => {
+    link.addEventListener('click', function(event) {
+      if (journalEntries.length > 1 || journalEntries[0].value) {
+        event.preventDefault();
+        window.open(link.href, '_blank');
+      }
+    });
+  });
 
 
 
