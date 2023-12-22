@@ -60,6 +60,7 @@ def get_prompt():
     return jsonify({'prompt': output['text']})
 
 
+# Route to write downloadable files
 @app.route('/download', methods=['GET', 'POST'])
 def download():
     format = request.json.get('format')
