@@ -100,9 +100,9 @@ def write_txt(title, entries, prompts):
     # Create the content for the text file
     content = ''
     if title:
-        content += title.upper() + '\n\n'
+        content += title.upper() + '\n\n\n'
     for prompt, entry in zip(prompts, entries):
-        content += (prompt + '\n') if prompt else ''
+        content += (prompt.strip() + '\n\n') if prompt else ''
         content += entry + '\n\n'
 
     # Create a BytesIO object to store the text file
