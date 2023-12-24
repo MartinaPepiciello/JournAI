@@ -24,14 +24,17 @@ chatbot.change_conversation(id)
 # For the first entry
 prompt_start = '''I would like you to act as a professional therapist and help me journal more effectively. 
 I will now give you the journal I'm writing, and I would like you to respond with a question or prompt that helps me reflect more deeply on what I just wrote. 
-Please keep the tone simple and friendly, and keep your response to no more than 60 words long. Here is my journal: '''
+Please don't comment about what I just wrote or say something like "great" or "that sounds reasonable" - please just give me a prompt to reflect. 
+Please keep the tone simple and friendly, and it is important that you keep your response to no more than 60 words long. Here is my journal: '''
 # For any subsequent entry
 prompt_later = '''I just added a new journal entry based on your previous prompt. 
 Once again, I would like you to respond with a question or prompt that helps me reflect more deeply on what I just wrote. 
+Please don't comment about what I just wrote or say something like "great" or "that sounds reasonable" - please just give me a prompt to reflect. 
 Please keep the tone simple and friendly, and it is important that you keep your response to no more than 60 words. Here is my new entry: '''
 # For any editing an entry
-prompt_edit = '''I just modified a previous journal entry I wrote. Please, let's start fresh from there. 
+prompt_edit = '''I just modified a previous journal entry I wrote. Please, let's start fresh from there, but keep in mind what I wrote until now. 
 I will now give you the modified entry, and I would like you to respond with a question or prompt that helps me reflect more deeply on what I just wrote. 
+Please don't comment about what I just wrote or say something like "great" or "that sounds reasonable" - please just give me a prompt to reflect. 
 Please keep the tone simple and friendly, and it is important that you keep your response to no more than 60 words. Here is my edited entry: '''
 
 

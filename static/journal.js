@@ -136,7 +136,7 @@ function submitReflect(edit=false) {
     .then(data => {
         prompt.innerHTML = data.prompt;
         prompts.push(prompt);
-        addJournalEntry('Continue journaling...')
+        addJournalEntry('Continue journaling...');
         editBtns[currentIndex].children[0].disabled = false;
     })
     .catch(error => console.error('Error:', error));
