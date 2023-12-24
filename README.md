@@ -1,6 +1,6 @@
 # JournAI - an AI-assisted journaling tool
 
-#### Video Demo:  <URL HERE>
+#### Video Demo: https://youtu.be/vimItStOqB0/
 
 #### Link: https://journai.pythonanywhere.com/
 
