@@ -5,19 +5,16 @@ from hugchat.login import Login
 sign = Login('wiyksrsnouprasiqkl@cazlv.com', 'HugMe123!')
 cookie_path_dir = "./cookies_snapshot"
 
-try:
-    cookies = sign.loadCookiesFromDir(cookie_path_dir) # This will detect if the JSON file exists, return cookies if it does and raise an Exception if it's not.
-except:
-    cookies = sign.login()
-    sign.saveCookiesToDir(cookie_path_dir)
+# OLD COOKIE LOADING
+# try:
+#     cookies = sign.loadCookiesFromDir(cookie_path_dir) # This will detect if the JSON file exists, return cookies if it does and raise an Exception if it's not.
+# except:
+#     cookies = sign.login()
+#     sign.saveCookiesToDir(cookie_path_dir)
 
-# # Save cookies to the local directory
+# NEW COOKIE LOADING
+cookies = sign.login(save_cookies=True)
 
-
-
-# # Load cookies when you restart your program:
-# sign = Login('wiyksrsnouprasiqkl@cazlv.com', None)
-# cookies = sign.loadCookiesFromDir(cookie_path_dir) # This will detect if the JSON file exists, return cookies if it does and raise an Exception if it's not.
 
 # Create a ChatBot
 chatbot = hugchat.ChatBot(cookies=cookies.get_dict())  # or cookie_path="usercookies/<email>.json"

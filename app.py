@@ -9,11 +9,7 @@ app = Flask(__name__)
 # Log in to huggingface, grant authorization to huggingchat, try to find cookies and write them if needed
 sign = Login('wiyksrsnouprasiqkl@cazlv.com', 'HugMe123!')
 cookie_path_dir = "./cookies_snapshot"
-try:
-    cookies = sign.loadCookiesFromDir(cookie_path_dir)
-except:
-    cookies = sign.login()
-    sign.saveCookiesToDir(cookie_path_dir)
+cookies = sign.login(save_cookies=True)
 
 # Create chatbot and start conversation
 chatbot = hugchat.ChatBot(cookies=cookies.get_dict())
